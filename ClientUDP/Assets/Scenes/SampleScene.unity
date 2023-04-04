@@ -331,7 +331,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 161
+    m_FontSize: 84
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 10
@@ -342,7 +342,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Si senor
+  m_Text: Connect.
 --- !u!222 &669412187
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -381,8 +381,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0567a6a71a0d1d6488a82cd8922b8d9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ip: 127.0.0.1
-  port: 54321
+  ip: 192.168.178.19
+  port: 7777
 --- !u!4 &733741055
 Transform:
   m_ObjectHideFlags: 0
@@ -511,8 +511,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.000015259, y: 160.45}
-  m_SizeDelta: {x: 601.731, y: 320.896}
+  m_AnchoredPosition: {x: 0.000015259, y: 270.2907}
+  m_SizeDelta: {x: 601.731, y: 101.215}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1069654014
 MonoBehaviour:
@@ -860,8 +860,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.000030518, y: -330}
-  m_SizeDelta: {x: 692.164, y: 269.664}
+  m_AnchoredPosition: {x: -0.000030518, y: -254.79211}
+  m_SizeDelta: {x: 666.99, y: 119.248}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1986110395
 MonoBehaviour:
@@ -974,7 +974,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2051664080
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1076,18 +1076,18 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 139
+    m_FontSize: 73
     m_FontStyle: 2
     m_BestFit: 0
     m_MinSize: 10
     m_MaxSize: 186
-    m_Alignment: 0
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: ...name?
+  m_Text: your name here
 --- !u!222 &2090287490
 CanvasRenderer:
   m_ObjectHideFlags: 0

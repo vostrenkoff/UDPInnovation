@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 7375006211621312063}
   m_Layer: 5
   m_Name: playerPref
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -92,6 +92,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nicknameText: {fileID: 5347168077854885775}
+  nicknameOnTop: 
 --- !u!50 &3409585404928211170
 Rigidbody2D:
   serializedVersion: 4

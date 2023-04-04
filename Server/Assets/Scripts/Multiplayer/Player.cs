@@ -9,12 +9,12 @@ using UnityEngine.Networking;
 public class Player : MonoBehaviour
 {
     public GameObject nicknameText;
-    private float _speed = 1.5f;
-    public static string nicknameOnTop;
+    private float _speed = 2.5f;
+    public  string nicknameOnTop;
     public static Dictionary<ushort, Player> list= new Dictionary<ushort, Player>();
     public ushort Id { get; private set; }
     public string Username { get; private set; }
-
+    private static Camera _camera;
     private void Move(float dir, ushort id)
     {
         Debug.Log("move "+dir);
@@ -42,7 +42,9 @@ public class Player : MonoBehaviour
         player.Id = id;
         player.name = username;
         list.Add(id, player);
-        nicknameOnTop = username;
+        player.nicknameOnTop = username;
+        _camera = FindObjectOfType<Camera>();
+        _camera.GetComponent<MultipleTargetCamera>().targets.Add(player.transform);
     }
     private void Update()
     {
@@ -51,6 +53,7 @@ public class Player : MonoBehaviour
     private void OnDestroy()
     {
         list.Remove(Id);
+        _camera.GetComponent<MultipleTargetCamera>().targets.Remove(transform);
     }
     [MessageHandler((ushort)ClientToServerId.input)]
     private static void Input(ushort fromClientId, Message message)
