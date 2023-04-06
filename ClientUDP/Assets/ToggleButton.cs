@@ -5,9 +5,12 @@ using UnityEngine;
 public class ToggleButton : MonoBehaviour
 {
     [SerializeField] List<GameObject> ActivateObjectList = new List<GameObject>();
+    [SerializeField] List<float> YLevelFloat = new List<float>();
     [SerializeField] Vector3 moveUpSpeed;
     [SerializeField] Vector3 moveDownSpeed;
-    [SerializeField] int maxHeightWall;
+    [SerializeField] float characterHeight;
+    float maxHeightWall;
+    bool moveDown;
 
     // Start is called before the first frame update
     void Start()
@@ -20,21 +23,33 @@ public class ToggleButton : MonoBehaviour
     {
         for (int i = 0; i < ActivateObjectList.Count; i++)
         {
-            if(ActivateObjectList[i].transform.position.y > -1.5f)
+            if(ActivateObjectList[i].transform.position.y >= YLevelFloat[i] && moveDown)
                 ActivateObjectList[i].transform.position -= moveDownSpeed * Time.deltaTime;
         }
     }
 
     void OnTriggerStay2D(Collider2D col)
     {
-        Debug.Log(col.gameObject.name + " : " + gameObject.name + " : " + Time.time);
+        moveDown = false;
         if(col.gameObject.name == "Player")
         {
             for (int i = 0; i < ActivateObjectList.Count; i++)
             {
-                if(maxHeightWall > ActivateObjectList[i].transform.position.y)
+                maxHeightWall = YLevelFloat[i] + characterHeight;
+                if (maxHeightWall >= ActivateObjectList[i].transform.position.y)
+                {
                     ActivateObjectList[i].transform.position += moveUpSpeed * Time.deltaTime;
+                }
+                else
+                {
+                    break;
+                }
             }
         }
+    }
+
+    void OnTriggerExit2D(Collider2D col)
+    {
+        moveDown = true;
     }
 }
