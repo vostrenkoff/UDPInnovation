@@ -23,6 +23,7 @@ public enum ClientToServerId : ushort
 {
     name = 1,
     input,
+    jumpinput,
 }
 
 public class NetworkManager : MonoBehaviour

@@ -9,25 +9,44 @@ using UnityEngine.Networking;
 public class Player : MonoBehaviour
 {
     public GameObject nicknameText;
-    private float _speed = 2.5f;
+    public GameObject groundCheck;
+    private float _speed = 250f;
+    public float jumpforce = 20f;
     public  string nicknameOnTop;
     public static Dictionary<ushort, Player> list= new Dictionary<ushort, Player>();
     public ushort Id { get; private set; }
     public string Username { get; private set; }
     private static Camera _camera;
+    private bool _isGrounded = false;
     private void Move(float dir, ushort id)
     {
-        Debug.Log("move "+dir);
+        //Debug.Log("move "+dir);
         if (list.TryGetValue(id, out Player player))
         {
-            Vector3 addedValue = new Vector3(dir, 0, 0);
-            //player.transform.position += addedValue;
-            float moveAmount = dir * Time.deltaTime;
-            
-            transform.position += new Vector3(moveAmount*_speed, 0f, 0f);
+            Vector2 movement = new Vector2(dir * _speed, 0f);
+
+            // Set the velocity of the Rigidbody2D component to the movement vector
+            player.GetComponent<Rigidbody2D>().velocity = movement;
         }
     }
-
+    private void Jump(ushort id)
+    {
+        if (list.TryGetValue(id, out Player player))
+        {
+            Rigidbody2D rb = player.GetComponent<Rigidbody2D>();
+            if (rb != null && GroundCheck.isGrounded)
+            {
+                
+                rb.AddForce(Vector3.up * jumpforce, ForceMode2D.Impulse);
+            }
+            else
+            {
+                Debug.Log("Jump is not allowed.");
+            }
+        }
+        else 
+            Debug.Log("ERROR");
+    }
     [MessageHandler((ushort)ClientToServerId.name)]
     private static void Name(ushort fromClientId, Message message)
     {
@@ -58,9 +77,10 @@ public class Player : MonoBehaviour
     [MessageHandler((ushort)ClientToServerId.input)]
     private static void Input(ushort fromClientId, Message message)
     {
-        //Debug.Log(message.GetFloat());
+        //Debug.Log(message.GetInt());
         if (list.TryGetValue(fromClientId, out Player player))
             player.Move(message.GetFloat(),fromClientId);
+        
         else
         {
             Debug.Log("uh oh, couldnt find that player");
@@ -68,5 +88,41 @@ public class Player : MonoBehaviour
                 Debug.Log(item + "id: " + message.GetUShort());
             }
         }
+    }
+    [MessageHandler((ushort)ClientToServerId.jumpinput)]
+    private static void JumpInput(ushort fromClientId, Message message)
+    {
+        //
+        if (list.TryGetValue(fromClientId, out Player player))
+        {
+            Debug.Log("jummmped");
+            player.Jump(fromClientId);
+        }
+        //player.Move(message.GetFloat(), fromClientId);
+
+        else
+        {
+            Debug.Log("uh oh, couldnt find that player");
+            foreach (var item in list)
+            {
+                Debug.Log(item + "id: " + message.GetUShort());
+            }
+        }
+        Debug.Log(message.GetInt());
+    }
+    private bool IsGrounded()
+    {
+        float extraHeightText = .1f;
+        
+        RaycastHit2D raycastHit = Physics2D.Raycast(transform.position, Vector2.down, extraHeightText, Physics2D.GetLayerCollisionMask(gameObject.layer));
+        if(raycastHit.collider== null)
+        {
+            Debug.Log(" not COLLIDEd ");
+        }
+        else
+            Debug.Log(" COLLIDEd ");
+
+        return raycastHit.collider != null;
+
     }
 }
