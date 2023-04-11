@@ -23,22 +23,21 @@ public class ToggleButton : MonoBehaviour
     {
         for (int i = 0; i < ActivateObjectList.Count; i++)
         {
-            if(ActivateObjectList[i].transform.position.y >= YLevelFloat[i] && moveDown)
+            Debug.Log(ActivateObjectList[i].transform.position.y);
+            Debug.Log(maxHeightWall);
+            if (ActivateObjectList[i].transform.position.y >= YLevelFloat[i] && moveDown)
                 ActivateObjectList[i].transform.position -= moveDownSpeed * Time.deltaTime;
         }
     }
 
     void OnTriggerStay2D(Collider2D col)
     {
-        
         moveDown = false;
         if(col.gameObject.tag == "Player1" || col.gameObject.tag == "Player2")
         {
             for (int i = 0; i < ActivateObjectList.Count; i++)
             {
                 maxHeightWall = YLevelFloat[i] + characterHeight;
-                Debug.Log(maxHeightWall);
-                Debug.Log(ActivateObjectList[i].transform.position.y);
                 if (maxHeightWall >= ActivateObjectList[i].transform.position.y)
                 {
                     Debug.Log("trigger");

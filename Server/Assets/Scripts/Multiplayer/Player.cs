@@ -9,7 +9,7 @@ using UnityEngine.Networking;
 public class Player : MonoBehaviour
 {
     public GameObject nicknameText;
-    private float _speed = 2.5f;
+    [SerializeField] private float _speed = 2.5f;
     public  string nicknameOnTop;
     public static Dictionary<ushort, Player> list= new Dictionary<ushort, Player>();
     public ushort Id { get; private set; }
