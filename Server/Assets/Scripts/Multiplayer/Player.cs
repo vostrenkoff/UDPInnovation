@@ -35,16 +35,33 @@ public class Player : MonoBehaviour
     }
     public static void Spawn(ushort id, string username)
     {
-        Player player = Instantiate(GameLogic.Singleton.PlayerPrefab, new Vector3(0f,0f,0f), Quaternion.identity).GetComponent<Player>();
-        GameObject canvas = GameObject.Find("Canvas");
-        player.transform.SetParent(canvas.transform);
-        player.transform.localPosition= Vector3.zero;
-        player.Id = id;
-        player.name = username;
-        list.Add(id, player);
-        player.nicknameOnTop = username;
-        _camera = FindObjectOfType<Camera>();
-        _camera.GetComponent<MultipleTargetCamera>().targets.Add(player.transform);
+        if(list.Count == 1)
+        {
+            Player player = Instantiate(GameLogic.Singleton.Player1Prefab, new Vector3(0f, 0f, 0f), Quaternion.identity).GetComponent<Player>();
+            GameObject canvas = GameObject.Find("Canvas");
+            player.transform.SetParent(canvas.transform);
+            player.transform.localPosition = Vector3.zero;
+            player.Id = id;
+            player.name = username;
+            list.Add(id, player);
+            player.nicknameOnTop = username;
+            _camera = FindObjectOfType<Camera>();
+            _camera.GetComponent<MultipleTargetCamera>().targets.Add(player.transform);
+        }
+        if (list.Count == 0)
+        {
+            Player player = Instantiate(GameLogic.Singleton.Player2Prefab, new Vector3(0f, 0f, 0f), Quaternion.identity).GetComponent<Player>();
+            GameObject canvas = GameObject.Find("Canvas");
+            player.transform.SetParent(canvas.transform);
+            player.transform.localPosition = Vector3.zero;
+            player.Id = id;
+            player.name = username;
+            list.Add(id, player);
+            player.nicknameOnTop = username;
+            _camera = FindObjectOfType<Camera>();
+            _camera.GetComponent<MultipleTargetCamera>().targets.Add(player.transform);
+        }
+
     }
     private void Update()
     {
