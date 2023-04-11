@@ -54,12 +54,15 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Assets\PlayerController.cs" />
+    <Compile Include="Assets\ToggleButton.cs" />
     <Compile Include="Assets\Multiplayer\MessageExtensions.cs" />
+    <Compile Include="Assets\ToggleLever.cs" />
     <Compile Include="Assets\Multiplayer\NetworkManager.cs" />
+    <Compile Include="Assets\LaptopController.cs" />
+    <Compile Include="Assets\LeftButton.cs" />
     <Compile Include="Assets\Multiplayer\UIManager.cs" />
     <Compile Include="Assets\Multiplayer\GameLogic.cs" />
     <Compile Include="Assets\Multiplayer\Player.cs" />
-    <Compile Include="Assets\LeftButton.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Multiplayer\RiptideNetworking.dll" />
