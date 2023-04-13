@@ -6,11 +6,13 @@ using UnityEngine.VFX;
 using UnityEngine.UI;
 using UnityEngine.Networking;
 using UnityEngine.Rendering;
+using Newtonsoft.Json.Bson;
 
 public class Player : MonoBehaviour
 {
     public GameObject nicknameText;
     [SerializeField] private Rigidbody2D rb;
+    [SerializeField] private PlayerMovement _playerMovement;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private float _speed = 8f;
@@ -21,6 +23,12 @@ public class Player : MonoBehaviour
     public ushort Id { get; private set; }
     public string Username { get; private set; }
     private static Camera _camera;
+
+
+    private IEnumerator coroutine;
+    private bool jumpBlock = false;
+
+
     private void Move(float command, ushort id)
     {
         Debug.Log("command "+ command);
@@ -44,14 +52,18 @@ public class Player : MonoBehaviour
 
                 rb.velocity = new Vector2(_speed, rb.velocity.y);
             }
-            if (command == 3 && isGrounded())
+            if (command == 3 && !jumpBlock)
             {
-                rb.velocity = new Vector2(rb.velocity.x, jumpStrength);
+                Debug.Log("got message 3 ");
+                    jumpBlock= true;
+                    _playerMovement.Jump();
+                    StartCoroutine(coroutine);
             }
-            if (command == 3 && rb.velocity.y > 0f)
+            
+            /*if (command == 3 && rb.velocity.y > 0f)
             {
                 rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
-            }
+            }*/
 
         }
     }
@@ -91,12 +103,16 @@ public class Player : MonoBehaviour
         }
 
     }
+    private void Start()
+    {
+        coroutine = Wait();
+    }
     private void Update()
     {
-        Debug.Log("isgr " + isGrounded());
         rb.velocity = new Vector2 (horizontal * _speed, rb.velocity.y);
 
         nicknameText.GetComponent<Text>().text = nicknameOnTop;
+        
     }
     private bool isGrounded()
     {
@@ -123,6 +139,15 @@ public class Player : MonoBehaviour
             foreach(var item in list) {
                 Debug.Log(item + "id: " + message.GetUShort());
             }
+        }
+    }
+
+    private IEnumerator Wait()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(5f);
+            jumpBlock = false;
         }
     }
 }

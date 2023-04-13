@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: -6471591019908684284}
   - component: {fileID: 3409585404928211170}
   - component: {fileID: 7375006211621312063}
+  - component: {fileID: -1980412152102887514}
   m_Layer: 5
   m_Name: playerPref
   m_TagString: Player1
@@ -92,7 +93,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nicknameText: {fileID: 5347168077854885775}
+  rb: {fileID: 0}
+  groundCheck: {fileID: 0}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
   _speed: 2.5
+  jumpStrength: 160
   nicknameOnTop: 
 --- !u!50 &3409585404928211170
 Rigidbody2D:
@@ -141,6 +148,22 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 100.37, y: 95.82}
   m_EdgeRadius: 0
+--- !u!114 &-1980412152102887514
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 370766406212356920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f5a101cbdaf5274599ba2b5567265be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: -6471591019908684284}
+  controller: {fileID: 0}
+  rb: {fileID: 3409585404928211170}
+  jumpStrength: 0
 --- !u!1 &5347168077854885775
 GameObject:
   m_ObjectHideFlags: 0
