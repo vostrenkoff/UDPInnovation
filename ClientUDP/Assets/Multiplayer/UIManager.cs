@@ -25,6 +25,8 @@ public class UIManager : MonoBehaviour
     [Header("Connect")]
     [SerializeField] private GameObject connectUI;
     [SerializeField] private InputField usernameField;
+    [SerializeField] private InputField ipField;
+    [SerializeField] private InputField portField;
     private void Awake()
     {
         Singleton = this;

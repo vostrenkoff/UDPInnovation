@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Riptide;
 using Riptide.Utils;
 using Riptide.Transports;
@@ -33,6 +34,8 @@ public class NetworkManager : MonoBehaviour
 
     [SerializeField] private string ip;
     [SerializeField] private ushort port;
+    [SerializeField] private InputField ipinput;
+    [SerializeField] private InputField portinput;
     private void Awake()
     {
         Singleton = this;
@@ -58,7 +61,13 @@ public class NetworkManager : MonoBehaviour
     }
     public void Connect()
     {
-        client.Connect($"{ip}:{port}");
+        if (ipinput.text == "" || portinput.text =="")
+            client.Connect($"{ip}:{port}");
+        else
+        {
+            client.Connect($"{ipinput.text}:{portinput.text}");
+        }
+
     }
     private void DidConnect(object sender, EventArgs e)
     {
