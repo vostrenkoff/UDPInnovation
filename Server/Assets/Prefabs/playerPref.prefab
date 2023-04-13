@@ -30,7 +30,7 @@ RectTransform:
   m_GameObject: {fileID: 370766406212356920}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
+  m_LocalScale: {x: 0.11, y: 0.11, z: 0.11}
   m_Children:
   - {fileID: 4083226356939408721}
   m_Father: {fileID: 0}
@@ -92,6 +92,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nicknameText: {fileID: 5347168077854885775}
+  _speed: 2.5
   nicknameOnTop: 
 --- !u!50 &3409585404928211170
 Rigidbody2D:

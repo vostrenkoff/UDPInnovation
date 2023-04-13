@@ -23,8 +23,6 @@ public class ToggleButton : MonoBehaviour
     {
         for (int i = 0; i < ActivateObjectList.Count; i++)
         {
-            Debug.Log(ActivateObjectList[i].transform.position.y);
-            Debug.Log(maxHeightWall);
             if (ActivateObjectList[i].transform.position.y >= YLevelFloat[i] && moveDown)
                 ActivateObjectList[i].transform.position -= moveDownSpeed * Time.deltaTime;
         }
@@ -40,7 +38,6 @@ public class ToggleButton : MonoBehaviour
                 maxHeightWall = YLevelFloat[i] + characterHeight;
                 if (maxHeightWall >= ActivateObjectList[i].transform.position.y)
                 {
-                    Debug.Log("trigger");
                     ActivateObjectList[i].transform.position += moveUpSpeed * Time.deltaTime;
                 }
                 else

@@ -38,7 +38,6 @@ public class ToggleLever : MonoBehaviour
     {
         for (int i = 0; i < ActivateObjectList.Count; i++)
         {
-            Debug.Log(ActivateObjectList[i].transform.position.y);
             if (ActivateObjectList[i].transform.position.y >= YLevelFloat[i] && !isTurned)
                 ActivateObjectList[i].transform.position -= moveDownSpeed * Time.deltaTime;
         }
