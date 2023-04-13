@@ -47,6 +47,10 @@ public class TempController2 : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E))
         {
             bigSizeActive = !bigSizeActive;
+            if (bigSizeActive)
+            {
+                transform.position += new Vector3(0, 20, 0);
+            }
         }
 
         if (bigSizeActive)
