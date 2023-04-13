@@ -5,26 +5,54 @@ using Riptide;
 using UnityEngine.VFX;
 using UnityEngine.UI;
 using UnityEngine.Networking;
+using UnityEngine.Rendering;
 
 public class Player : MonoBehaviour
 {
     public GameObject nicknameText;
-    [SerializeField] private float _speed = 2.5f;
+    [SerializeField] private Rigidbody2D rb;
+    [SerializeField] private Transform groundCheck;
+    [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private float _speed = 8f;
+    private float horizontal;
+    public float jumpStrength = 160f;
     public  string nicknameOnTop;
     public static Dictionary<ushort, Player> list= new Dictionary<ushort, Player>();
     public ushort Id { get; private set; }
     public string Username { get; private set; }
     private static Camera _camera;
-    private void Move(float dir, ushort id)
+    private void Move(float command, ushort id)
     {
-        Debug.Log("move "+dir);
+        Debug.Log("command "+ command);
         if (list.TryGetValue(id, out Player player))
         {
-            Vector3 addedValue = new Vector3(dir, 0, 0);
-            //player.transform.position += addedValue;
-            float moveAmount = dir * Time.deltaTime;
-            
-            transform.position += new Vector3(moveAmount*_speed, 0f, 0f);
+            if(command == 1)
+            {
+                /*Vector3 addedValue = new Vector3(-10, 0, 0);
+                //player.transform.position += addedValue;
+                float moveAmount = -10* Time.deltaTime;
+                transform.position += new Vector3(moveAmount * _speed, 0f, 0f);*/
+                rb.velocity = new Vector2(-_speed, rb.velocity.y);
+
+            }
+            if (command == 2)
+            {
+                /*Vector3 addedValue = new Vector3(10, 0, 0);
+                //player.transform.position += addedValue;
+                float moveAmount = 10 * Time.deltaTime;
+                transform.position += new Vector3(moveAmount * _speed, 0f, 0f);*/
+
+                rb.velocity = new Vector2(_speed, rb.velocity.y);
+            }
+            if (command == 3 && isGrounded())
+            {
+                rb.velocity = new Vector2(rb.velocity.x, jumpStrength);
+            }
+            if (command == 3 && rb.velocity.y > 0f)
+            {
+                rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
+            }
+
         }
     }
 
@@ -65,7 +93,15 @@ public class Player : MonoBehaviour
     }
     private void Update()
     {
+        Debug.Log("isgr " + isGrounded());
+        rb.velocity = new Vector2 (horizontal * _speed, rb.velocity.y);
+
         nicknameText.GetComponent<Text>().text = nicknameOnTop;
+    }
+    private bool isGrounded()
+    {
+        
+        return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
     }
     private void OnDestroy()
     {
@@ -77,7 +113,10 @@ public class Player : MonoBehaviour
     {
         //Debug.Log(message.GetFloat());
         if (list.TryGetValue(fromClientId, out Player player))
-            player.Move(message.GetFloat(),fromClientId);
+        {
+            player.Move(message.GetInt(),fromClientId);
+            Debug.Log("Command received: " + message.GetInt());
+        }
         else
         {
             Debug.Log("uh oh, couldnt find that player");
