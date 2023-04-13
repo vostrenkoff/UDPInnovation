@@ -12,12 +12,6 @@ public class ToggleButton : MonoBehaviour
     float maxHeightWall;
     bool moveDown;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -31,7 +25,7 @@ public class ToggleButton : MonoBehaviour
     void OnTriggerStay2D(Collider2D col)
     {
         moveDown = false;
-        if(col.gameObject.tag == "Player1" || col.gameObject.tag == "Player2")
+        if(col.gameObject.CompareTag("Player1") || col.gameObject.CompareTag("Player2"))
         {
             for (int i = 0; i < ActivateObjectList.Count; i++)
             {

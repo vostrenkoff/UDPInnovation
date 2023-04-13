@@ -17,13 +17,13 @@ public class TempController2 : MonoBehaviour
     public float gravityScale = 1.5f;
     public Camera mainCamera;
 
-    bool facingRight = true;
     float moveDirection = 0;
     bool isGrounded = false;
     Vector3 cameraPos;
     Rigidbody2D r2d;
     CapsuleCollider2D mainCollider;
     Transform t;
+    int lastMoveDirection = 1; // 1 for right, -1 for left
 
     // Use this for initialization
     void Start()
@@ -34,7 +34,6 @@ public class TempController2 : MonoBehaviour
         r2d.freezeRotation = true;
         r2d.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
         r2d.gravityScale = gravityScale;
-        facingRight = t.localScale.x > 0;
 
         if (mainCamera)
         {
@@ -60,7 +59,7 @@ public class TempController2 : MonoBehaviour
         }
 
         // Movement controls
-        if ((Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow)) && (isGrounded || Mathf.Abs(r2d.velocity.x) > 0.01f))
+        if ((Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow)))
         {
             moveDirection = Input.GetKey(KeyCode.LeftArrow) ? -1 : 1;
         }
@@ -72,19 +71,27 @@ public class TempController2 : MonoBehaviour
             }
         }
 
-        // Change facing direction
+        if (Input.GetKey(KeyCode.RightArrow))
+        {
+            t.localScale = new Vector3(Mathf.Abs(t.localScale.x), t.localScale.y, transform.localScale.z);
+        }
+        if (Input.GetKey(KeyCode.LeftArrow))
+        {
+            t.localScale = new Vector3(-Mathf.Abs(t.localScale.x), t.localScale.y, transform.localScale.z);
+        }
+
         if (moveDirection != 0)
         {
-            if (moveDirection > 0 && !facingRight)
-            {
-                facingRight = true;
-                t.localScale = new Vector3(Mathf.Abs(t.localScale.x), t.localScale.y, transform.localScale.z);
-            }
-            if (moveDirection < 0 && facingRight)
-            {
-                facingRight = false;
-                t.localScale = new Vector3(-Mathf.Abs(t.localScale.x), t.localScale.y, t.localScale.z);
-            }
+            lastMoveDirection = (int)Mathf.Sign(moveDirection);
+        }
+
+        if (lastMoveDirection == 1)
+        {
+            t.localScale = new Vector3(Mathf.Abs(t.localScale.x), t.localScale.y, transform.localScale.z);
+        }
+        else if (lastMoveDirection == -1)
+        {
+            t.localScale = new Vector3(-Mathf.Abs(t.localScale.x), t.localScale.y, transform.localScale.z);
         }
 
         // Jumping
@@ -99,7 +106,6 @@ public class TempController2 : MonoBehaviour
             mainCamera.transform.position = new Vector3(t.position.x, cameraPos.y, cameraPos.z);
         }
     }
-
     void FixedUpdate()
     {
         Bounds colliderBounds = mainCollider.bounds;
