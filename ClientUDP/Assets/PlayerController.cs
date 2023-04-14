@@ -33,6 +33,7 @@ public class PlayerController : MonoBehaviour
     {
         command = 5;
         SendInput();
+        command = 0;
     }
     public void reset()
     {
@@ -44,7 +45,7 @@ public class PlayerController : MonoBehaviour
     {
         //dirX = Input.acceleration.x * moveSpeed;
         //Debug.Log(dirX);
-        //SendInput();
+        SendInput();
         //command= 0;
     }
     private void SendInput()

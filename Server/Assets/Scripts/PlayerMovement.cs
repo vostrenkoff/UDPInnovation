@@ -24,10 +24,8 @@ public class PlayerMovement : MonoBehaviour
 
    private void Update()
     {
-        Debug.Log("update");
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Debug.Log("yes i jumped");
             Jump();
         }
     }

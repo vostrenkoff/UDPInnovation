@@ -101,12 +101,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nicknameText: {fileID: 6648485493346117825, guid: 6e0299ddf371b8b4eac5a1e06986d557, type: 3}
   rb: {fileID: 1590325126905181142}
+  _playerMovement: {fileID: 0}
   groundCheck: {fileID: 955400724558479984}
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
-  _speed: 200
-  jumpStrength: 8000
+  _speed: 30
+  jumpStrength: 420
   nicknameOnTop: 
 --- !u!50 &1590325126905181142
 Rigidbody2D:
@@ -123,7 +124,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 4
+  m_GravityScale: 50
   m_Material: {fileID: 0}
   m_Interpolate: 1
   m_SleepingMode: 0
@@ -170,7 +171,11 @@ MonoBehaviour:
   player: {fileID: 1590325126905181137}
   controller: {fileID: 0}
   rb: {fileID: 1590325126905181142}
-  jumpStrength: 20
+  jumpStrength: 420
+  groundCheck: {fileID: 0}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!1 &8326811613289122746
 GameObject:
   m_ObjectHideFlags: 0

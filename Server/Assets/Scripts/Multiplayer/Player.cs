@@ -23,11 +23,15 @@ public class Player : MonoBehaviour
     public ushort Id { get; private set; }
     public string Username { get; private set; }
     private static Camera _camera;
-
+    [SerializeField] public Character characterType;
 
     private IEnumerator coroutine;
     private bool jumpBlock = false;
-
+    public enum Character
+    {
+        Giant,
+        Shrink
+    }
 
     private void Move(float command, ushort id)
     {
@@ -41,7 +45,7 @@ public class Player : MonoBehaviour
                 float moveAmount = -10* Time.deltaTime;
                 transform.position += new Vector3(moveAmount * _speed, 0f, 0f);*/
                 rb.velocity = new Vector2(-_speed, rb.velocity.y);
-
+                transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
             }
             if (command == 2)
             {
@@ -49,7 +53,7 @@ public class Player : MonoBehaviour
                 //player.transform.position += addedValue;
                 float moveAmount = 10 * Time.deltaTime;
                 transform.position += new Vector3(moveAmount * _speed, 0f, 0f);*/
-
+                transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
                 rb.velocity = new Vector2(_speed, rb.velocity.y);
             }
             if (command == 3 && !jumpBlock)
@@ -59,13 +63,29 @@ public class Player : MonoBehaviour
                     _playerMovement.Jump();
                     StartCoroutine(coroutine);
             }
-            
+            if(command == 5)
+            {
+                if(characterType == Character.Giant)
+                {
+                    Debug.Log("Giant pushes.");
+
+                }
+                if(characterType == Character.Shrink)
+                {
+                    Debug.Log("Shrinker shrinks.");
+                }
+            }
+
             /*if (command == 3 && rb.velocity.y > 0f)
             {
                 rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
             }*/
 
         }
+    }
+    private void Flip()
+    {
+
     }
 
     [MessageHandler((ushort)ClientToServerId.name)]
@@ -77,10 +97,10 @@ public class Player : MonoBehaviour
     {
         if(list.Count == 1)
         {
-            Player player = Instantiate(GameLogic.Singleton.Player1Prefab, new Vector3(0f, 0f, 0f), Quaternion.identity).GetComponent<Player>();
+            Player player = Instantiate(GameLogic.Singleton.Player1Prefab, new Vector3(202, 404, 0f), Quaternion.identity).GetComponent<Player>();
             GameObject canvas = GameObject.Find("Canvas");
             player.transform.SetParent(canvas.transform);
-            player.transform.localPosition = Vector3.zero;
+            player.transform.localPosition = new Vector3(-661, -150, 0f);
             player.Id = id;
             player.name = username;
             list.Add(id, player);
@@ -90,10 +110,10 @@ public class Player : MonoBehaviour
         }
         if (list.Count == 0)
         {
-            Player player = Instantiate(GameLogic.Singleton.Player2Prefab, new Vector3(0f, 0f, 0f), Quaternion.identity).GetComponent<Player>();
+            Player player = Instantiate(GameLogic.Singleton.Player2Prefab, new Vector3(303f, 404f, 0f), Quaternion.identity).GetComponent<Player>();
             GameObject canvas = GameObject.Find("Canvas");
             player.transform.SetParent(canvas.transform);
-            player.transform.localPosition = Vector3.zero;
+            player.transform.localPosition = new Vector3(-761, -150, 0f);
             player.Id = id;
             player.name = username;
             list.Add(id, player);
