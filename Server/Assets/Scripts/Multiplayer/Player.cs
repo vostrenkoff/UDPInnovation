@@ -4,6 +4,7 @@ using UnityEngine;
 using Riptide;
 using UnityEngine.VFX;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using UnityEngine.Networking;
 using UnityEngine.Rendering;
 using Newtonsoft.Json.Bson;
@@ -27,12 +28,13 @@ public class Player : MonoBehaviour
 
     private IEnumerator coroutine;
     private bool jumpBlock = false;
+    
     public enum Character
     {
         Giant,
         Shrink
     }
-
+    
     private void Move(float command, ushort id)
     {
         Debug.Log("command "+ command);
@@ -83,10 +85,6 @@ public class Player : MonoBehaviour
 
         }
     }
-    private void Flip()
-    {
-
-    }
 
     [MessageHandler((ushort)ClientToServerId.name)]
     private static void Name(ushort fromClientId, Message message)
@@ -95,12 +93,29 @@ public class Player : MonoBehaviour
     }
     public static void Spawn(ushort id, string username)
     {
-        if(list.Count == 1)
+        Scene currentScene = SceneManager.GetActiveScene();
+        Vector3 spawnPos = new Vector3(0, 0, 0);
+
+        GameObject TextObject1 = GameObject.Find("P1GameObject");
+        GameObject TextObject2 = GameObject.Find("P2GameObject");
+        Text myText1 = TextObject1.GetComponent<Text>();
+        Text myText2 = TextObject2.GetComponent<Text>();
+
+        if (currentScene.name == "Main") { spawnPos = new Vector3(0, 0, 0); }
+        else if (currentScene.name == "LevelOne") { spawnPos = new Vector3(-661, -150, 0); }
+        else if (currentScene.name == "LevelTwo") { spawnPos = new Vector3(0, 0, 0); }
+        else if (currentScene.name == "LevelThree") { spawnPos = new Vector3(0, 0, 0); }
+        else if (currentScene.name == "LevelFour") { spawnPos = new Vector3(0, 0, 0); }
+        if (list.Count == 1)
         {
+            
+            
+            myText1.text = username + " connected";
+
             Player player = Instantiate(GameLogic.Singleton.Player1Prefab, new Vector3(202, 404, 0f), Quaternion.identity).GetComponent<Player>();
             GameObject canvas = GameObject.Find("Canvas");
             player.transform.SetParent(canvas.transform);
-            player.transform.localPosition = new Vector3(-661, -150, 0f);
+            player.transform.localPosition = spawnPos;
             player.Id = id;
             player.name = username;
             list.Add(id, player);
@@ -110,10 +125,14 @@ public class Player : MonoBehaviour
         }
         if (list.Count == 0)
         {
+            
+            
+            myText2.text = username + " connected";
+
             Player player = Instantiate(GameLogic.Singleton.Player2Prefab, new Vector3(303f, 404f, 0f), Quaternion.identity).GetComponent<Player>();
             GameObject canvas = GameObject.Find("Canvas");
             player.transform.SetParent(canvas.transform);
-            player.transform.localPosition = new Vector3(-761, -150, 0f);
+            player.transform.localPosition = spawnPos;
             player.Id = id;
             player.name = username;
             list.Add(id, player);
@@ -141,6 +160,7 @@ public class Player : MonoBehaviour
     }
     private void OnDestroy()
     {
+        
         list.Remove(Id);
         _camera.GetComponent<MultipleTargetCamera>().targets.Remove(transform);
     }
