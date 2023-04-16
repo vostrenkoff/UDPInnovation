@@ -8,6 +8,9 @@ using UnityEngine.SceneManagement;
 using UnityEngine.Networking;
 using UnityEngine.Rendering;
 using Newtonsoft.Json.Bson;
+using System.Linq.Expressions;
+using UnityEditor.U2D.Path;
+using System;
 
 public class Player : MonoBehaviour
 {
@@ -17,6 +20,7 @@ public class Player : MonoBehaviour
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private float _speed = 8f;
+    [SerializeField] private Animator AnimController;
     private float horizontal;
     public float jumpStrength = 160f;
     public  string nicknameOnTop;
@@ -24,6 +28,7 @@ public class Player : MonoBehaviour
     public ushort Id { get; private set; }
     public string Username { get; private set; }
     private static Camera _camera;
+    private  bool shrinked;
     [SerializeField] public Character characterType;
 
     private IEnumerator coroutine;
@@ -40,6 +45,10 @@ public class Player : MonoBehaviour
         Debug.Log("command "+ command);
         if (list.TryGetValue(id, out Player player))
         {
+            if(command == 0)
+            {
+                AnimController.SetBool("isWalking", false);
+            }
             if(command == 1)
             {
                 /*Vector3 addedValue = new Vector3(-10, 0, 0);
@@ -48,6 +57,7 @@ public class Player : MonoBehaviour
                 transform.position += new Vector3(moveAmount * _speed, 0f, 0f);*/
                 rb.velocity = new Vector2(-_speed, rb.velocity.y);
                 transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+                AnimController.SetBool("isWalking", true);
             }
             if (command == 2)
             {
@@ -57,9 +67,11 @@ public class Player : MonoBehaviour
                 transform.position += new Vector3(moveAmount * _speed, 0f, 0f);*/
                 transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
                 rb.velocity = new Vector2(_speed, rb.velocity.y);
+                AnimController.SetBool("isWalking", true);
             }
             if (command == 3 && !jumpBlock)
             {
+                AnimController.SetTrigger("jump");
                 Debug.Log("got message 3 ");
                     jumpBlock= true;
                     _playerMovement.Jump();
@@ -70,20 +82,38 @@ public class Player : MonoBehaviour
                 if(characterType == Character.Giant)
                 {
                     Debug.Log("Giant pushes.");
+                    AnimController.SetBool("isAbility", true);
 
                 }
                 if(characterType == Character.Shrink)
                 {
                     Debug.Log("Shrinker shrinks.");
+                    if (!shrinked)
+                    {
+                        transform.localScale = new Vector3(1.5f, 1.5f, 1f);
+                        shrinked = true;
+                    }
+                    else
+                    {
+                        transform.localScale = new Vector3(1f, 1f, 1);
+                        shrinked = false;
+                    }
                 }
             }
-
-            /*if (command == 3 && rb.velocity.y > 0f)
+            if (command == 6)
             {
-                rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
-            }*/
+                if (characterType == Character.Giant)
+                {
+                    AnimController.SetBool("isAbility", false);
 
-        }
+                }
+            }
+                /*if (command == 3 && rb.velocity.y > 0f)
+                {
+                    rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
+                }*/
+
+            }
     }
 
     [MessageHandler((ushort)ClientToServerId.name)]
@@ -98,8 +128,8 @@ public class Player : MonoBehaviour
 
         GameObject TextObject1 = GameObject.Find("P1GameObject");
         GameObject TextObject2 = GameObject.Find("P2GameObject");
-        Text myText1 = TextObject1.GetComponent<Text>();
-        Text myText2 = TextObject2.GetComponent<Text>();
+        //Text myText1 = TextObject1.GetComponent<Text>();
+        //Text myText2 = TextObject2.GetComponent<Text>();
 
         if (currentScene.name == "Main") { spawnPos = new Vector3(0, 0, 0); }
         else if (currentScene.name == "LevelOne") { spawnPos = new Vector3(-661, -150, 0); }
@@ -108,9 +138,9 @@ public class Player : MonoBehaviour
         else if (currentScene.name == "LevelFour") { spawnPos = new Vector3(0, 0, 0); }
         if (list.Count == 1)
         {
-            
-            
-            myText1.text = username + " connected";
+            //try { myText1.text = username + " connected"; }
+
+            //catch (Exception e) { /* its fine lol */}
 
             Player player = Instantiate(GameLogic.Singleton.Player1Prefab, new Vector3(202, 404, 0f), Quaternion.identity).GetComponent<Player>();
             GameObject canvas = GameObject.Find("Canvas");
@@ -125,9 +155,11 @@ public class Player : MonoBehaviour
         }
         if (list.Count == 0)
         {
-            
-            
-            myText2.text = username + " connected";
+
+
+           // try { myText2.text = username + " connected"; }
+
+            //catch (Exception e) { /* its fine lol */}
 
             Player player = Instantiate(GameLogic.Singleton.Player2Prefab, new Vector3(303f, 404f, 0f), Quaternion.identity).GetComponent<Player>();
             GameObject canvas = GameObject.Find("Canvas");
