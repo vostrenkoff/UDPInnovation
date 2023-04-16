@@ -1295,11 +1295,12 @@ MonoBehaviour:
   ActivateObjectList:
   - {fileID: 1743072369}
   YLevelFloat:
-  - 340
+  - 281
   moveUpSpeed: {x: 0, y: 100, z: 0}
   moveDownSpeed: {x: 0, y: 500, z: 0}
   characterHeight: 120
   isTurned: 0
+  SGCharacter: {fileID: 0}
 --- !u!1001 &907129550
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1706,6 +1707,7 @@ MonoBehaviour:
   moveDownSpeed: {x: 0, y: 200, z: 0}
   characterHeight: 278
   isTurned: 0
+  SGCharacter: {fileID: 0}
 --- !u!1001 &958600035
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2445,6 +2447,7 @@ MonoBehaviour:
   moveDownSpeed: {x: 0, y: 200, z: 0}
   characterHeight: 278
   isTurned: 0
+  SGCharacter: {fileID: 0}
 --- !u!1 &1688191045
 GameObject:
   m_ObjectHideFlags: 0
@@ -2553,8 +2556,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1743072369}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1258.15, y: -0.3218715, z: 0}
-  m_LocalScale: {x: 53.9507, y: 1039.4788, z: 107.9014}
+  m_LocalPosition: {x: 1258.15, y: -119.0647, z: 0}
+  m_LocalScale: {x: 53.9507, y: 802.9011, z: 107.9014}
   m_Children: []
   m_Father: {fileID: 1487272177}
   m_RootOrder: 0
@@ -2668,6 +2671,7 @@ MonoBehaviour:
   moveDownSpeed: {x: 0, y: 200, z: 0}
   characterHeight: 278
   isTurned: 0
+  SGCharacter: {fileID: 0}
 --- !u!1 &1809225640
 GameObject:
   m_ObjectHideFlags: 0
@@ -3313,6 +3317,7 @@ MonoBehaviour:
   moveDownSpeed: {x: 0, y: 200, z: 0}
   characterHeight: 278
   isTurned: 0
+  SGCharacter: {fileID: 0}
 --- !u!1 &2129484379
 GameObject:
   m_ObjectHideFlags: 0

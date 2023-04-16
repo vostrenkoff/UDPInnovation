@@ -15,6 +15,7 @@ public class ToggleLever : MonoBehaviour
     float maxHeightWall;
     [SerializeField] float characterHeight;
     [SerializeField] bool isTurned = false;
+    [SerializeField] ScriptableObject SGCharacter;
 
     private void Start()
     {
@@ -47,15 +48,35 @@ public class ToggleLever : MonoBehaviour
     }
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (!isTurned)
+        if (col.gameObject.CompareTag("Player2"))
         {
-            isTurned = true;
-            spriteRenderer.sprite = LeverOn;
+            Vector3 collisionScale = col.gameObject.transform.localScale;
+            if(collisionScale.y >= .1f)
+            {
+                if (!isTurned)
+                {
+                    isTurned = true;
+                    spriteRenderer.sprite = LeverOn;
+                }
+                else
+                {
+                    spriteRenderer.sprite = LeverOff;
+                    isTurned = false;
+                }
+            }
         }
-        else
+        if (col.gameObject.CompareTag("Player1"))
         {
-            spriteRenderer.sprite = LeverOff;
-            isTurned = false;
+            if (!isTurned)
+            {
+                isTurned = true;
+                spriteRenderer.sprite = LeverOn;
+            }
+            else
+            {
+                spriteRenderer.sprite = LeverOff;
+                isTurned = false;
+            }
         }
     }
 }
