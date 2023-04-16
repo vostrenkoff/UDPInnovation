@@ -81,15 +81,15 @@ public class Player : MonoBehaviour
                 if(characterType == Character.Shrink)
                 {
                     Debug.Log("Shrinker shrinks.");
-                    bigSizeActive = !bigSizeActive;
-
-                    if (bigSizeActive)
+                    if (!bigSizeActive)
                     {
                         transform.localScale = bigSize;
+                        bigSizeActive = true;
                     }
-                    else if (!bigSizeActive)
+                    else
                     {
                         transform.localScale = smallSize;
+                        bigSizeActive = false;
                     }
                 }
             }

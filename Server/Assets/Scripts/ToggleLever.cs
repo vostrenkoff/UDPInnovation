@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class ToggleLever : MonoBehaviour
 {
+    [SerializeField] Sprite LeverOff;
+    [SerializeField] Sprite LeverOn;
+    private SpriteRenderer spriteRenderer;
+    [Space]
     [SerializeField] List<GameObject> ActivateObjectList = new List<GameObject>();
     [SerializeField] List<float> YLevelFloat = new List<float>();
     [SerializeField] Vector3 moveUpSpeed;
@@ -12,6 +16,11 @@ public class ToggleLever : MonoBehaviour
     [SerializeField] float characterHeight;
     [SerializeField] bool isTurned = false;
 
+    private void Start()
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer.sprite = LeverOff;
+    }
     void Update()
     {
         MoveDown();
@@ -41,14 +50,12 @@ public class ToggleLever : MonoBehaviour
         if (!isTurned)
         {
             isTurned = true;
+            spriteRenderer.sprite = LeverOn;
         }
         else
         {
+            spriteRenderer.sprite = LeverOff;
             isTurned = false;
         }
-        transform.eulerAngles = new Vector3(
-            transform.eulerAngles.x,
-            transform.eulerAngles.y,
-            transform.eulerAngles.z + 90);
     }
 }
