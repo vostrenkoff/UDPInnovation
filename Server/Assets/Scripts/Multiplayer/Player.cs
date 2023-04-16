@@ -28,7 +28,13 @@ public class Player : MonoBehaviour
 
     private IEnumerator coroutine;
     private bool jumpBlock = false;
-    
+
+    [Space]
+
+    [SerializeField] Vector3 bigSize = new Vector3(0.22f, 0.22f, 0.22f);
+    [SerializeField] Vector3 smallSize = new Vector3(0.09f, 0.09f, 0.09f);
+    bool bigSizeActive = false;
+
     public enum Character
     {
         Giant,
@@ -75,6 +81,16 @@ public class Player : MonoBehaviour
                 if(characterType == Character.Shrink)
                 {
                     Debug.Log("Shrinker shrinks.");
+                    bigSizeActive = !bigSizeActive;
+
+                    if (bigSizeActive)
+                    {
+                        transform.localScale = bigSize;
+                    }
+                    else if (!bigSizeActive)
+                    {
+                        transform.localScale = smallSize;
+                    }
                 }
             }
 
