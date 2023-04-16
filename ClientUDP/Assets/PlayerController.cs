@@ -35,6 +35,12 @@ public class PlayerController : MonoBehaviour
         SendInput();
         command = 0;
     }
+    public void stopAbility()
+    {
+        command = 6;
+        SendInput();
+        command = 0;
+    }
     public void reset()
     {
         command = 0;
