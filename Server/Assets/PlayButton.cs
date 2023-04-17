@@ -16,6 +16,5 @@ public class PlayButton : MonoBehaviour
     }
     public void StartLevelOne()
     {
-        SceneManager.LoadScene("LevelOne");
     }
 }

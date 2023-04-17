@@ -46,6 +46,12 @@ public class PlayerController : MonoBehaviour
         command = 0;
         SendInput();
     }
+    public void restartGame()
+    {
+        command = 7;
+        SendInput();
+        command = 0;
+    }
     // Update is called once per frame
     void FixedUpdate()
     {

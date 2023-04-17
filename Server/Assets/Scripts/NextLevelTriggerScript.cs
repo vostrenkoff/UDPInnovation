@@ -8,6 +8,7 @@ public class NextLevelTriggerScript : MonoBehaviour
 {
     public bool player1InTrigger;
     public bool player2InTrigger;
+    UIController UIcontroller;
     [SerializeField] public Levels GoToLevel;
     public enum Levels
     {
@@ -42,12 +43,18 @@ public class NextLevelTriggerScript : MonoBehaviour
     }
     private void Update()
     {
+        if(UIcontroller == null) { 
+            UIcontroller = FindObjectOfType<UIController>();
+        }
         if (player1InTrigger && player2InTrigger)
         {
             if (GoToLevel == Levels.LevelOne) { SceneManager.LoadScene("LevelOne"); }
-            if (GoToLevel == Levels.LevelTwo) { SceneManager.LoadScene("LevelTwo"); }
-            if (GoToLevel == Levels.LevelThree) { SceneManager.LoadScene("LevelThree"); }
-            if (GoToLevel == Levels.LevelFour) { SceneManager.LoadScene("LevelFour"); }
+            if (GoToLevel == Levels.LevelTwo) 
+            {
+                UIcontroller.GoToLevel2();
+            }
+            if (GoToLevel == Levels.LevelThree) { UIcontroller.GoToLevel3(); }
+            if (GoToLevel == Levels.LevelFour) { UIcontroller.GoToLevel4(); }
         }
     }
 }

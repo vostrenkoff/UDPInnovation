@@ -57,7 +57,7 @@ public class NetworkManager : MonoBehaviour
     }
     private void OnApplicationQuit()
     {
-        client.Disconnect();
+        //client.Disconnect();
     }
     public void Connect()
     {

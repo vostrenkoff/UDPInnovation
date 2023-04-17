@@ -127,6 +127,57 @@ public class Player : MonoBehaviour
                     AnimController.SetBool("isAbility", false);
                 }
             }
+            if(command == 7)
+            {
+                if (GameObject.Find("LevelOne") != null)
+                {
+                    Player[] players = FindObjectsOfType<Player>();
+
+                    float startpos = 0;
+                    foreach (Player playerr in players)
+                    {
+
+                        playerr.transform.localPosition = new Vector3(-700 + startpos, -421f, 0f);
+                        startpos += 100;
+                    }
+                }
+                else if (GameObject.Find("LevelTwo") != null)
+                {
+                    Player[] players = FindObjectsOfType<Player>();
+
+                    float startpos = 0;
+                    foreach (Player playerr in players)
+                    {
+
+                        playerr.transform.localPosition = new Vector3(-35 + startpos, -421f, 0f);
+                        startpos += 100;
+                    }
+                }
+                else if (GameObject.Find("LevelThree") != null)
+                {
+                    Player[] players = FindObjectsOfType<Player>();
+
+                    float startpos = 0;
+                    foreach (Player playerr in players)
+                    {
+
+                        playerr.transform.localPosition = new Vector3(-812 + startpos, 158f, 0f);
+                        startpos += 100;
+                    }
+                }
+                else if (GameObject.Find("LevelFour") != null)
+                {
+                    Player[] players = FindObjectsOfType<Player>();
+
+                    float startpos = 0;
+                    foreach (Player playerr in players)
+                    {
+
+                        player.transform.localPosition = new Vector3(-805 + startpos, 320f, 0f);
+                        startpos += 100;
+                    }
+                }
+            }
 
             /*if (command == 3 && rb.velocity.y > 0f)
             {
@@ -198,10 +249,8 @@ public class Player : MonoBehaviour
         }
         if (list.Count == 0)
         {
-            Debug.Log("si senor 0");
             if (sceneName == "Main")
             {
-                Debug.Log("si senor Main");
                 if (UIcontroller != null)
                 {
                     
@@ -239,7 +288,7 @@ public class Player : MonoBehaviour
         
         if(list.Count == 2 && !startedLevel1)
         {
-            UIcontroller.ReadyToStart();
+            UIcontroller.Ready();
             startedLevel1 = true;
         }
     }

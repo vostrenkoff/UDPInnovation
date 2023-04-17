@@ -14,7 +14,7 @@ public class CrystalScript : MonoBehaviour
             BoxCollider2D collider = obj.GetComponent<BoxCollider2D>();
             if (collider != null)
             {
-                collider.enabled = false;
+                collider.enabled = true;
             }
         }
     }

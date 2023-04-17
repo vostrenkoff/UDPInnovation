@@ -19,7 +19,7 @@ public class MultipleTargetCamera : MonoBehaviour
 
     private float minX = -350f;
     private float maxX = 1660f;
-    private float minY = 400f;
+    private float minY = 200f;
     private float maxY = 1000f;
 
     public GameObject background;
@@ -63,11 +63,11 @@ public class MultipleTargetCamera : MonoBehaviour
 
         if (cam.orthographicSize < 300)
         {
-            minY = 200;
+            //minY = 200;
         }
         else
         {
-            minY= 400;
+            minY= 200;
         }
         if (targets.Count > 0)
         {
@@ -92,9 +92,8 @@ public class MultipleTargetCamera : MonoBehaviour
     private void Zoom()
     {
         float distance = GetGreatestDistance();
-        float newZoom = Mathf.Lerp(maxZoom, minZoom, distance / zoomDivider);
-        //cam.orthographicSize = newZoom;
-        cam.orthographicSize = Mathf.Clamp(distance,150,430);
+        //float newZoom = Mathf.Lerp(maxZoom, minZoom, distance / zoomDivider);
+        cam.orthographicSize = Mathf.Clamp(distance,200,430);
     }
 
     /*float GetGreatestDistance()
