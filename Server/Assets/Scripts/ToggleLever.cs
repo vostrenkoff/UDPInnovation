@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class ToggleLever : MonoBehaviour
 {
+    [SerializeField] AudioSource Source;
+    [SerializeField] AudioClip FlickLever;
+    [SerializeField] AudioClip MoveObject;
+    [Space]
     [SerializeField] public Sprite LeverOff;
     [SerializeField] public Sprite LeverOn;
     public SpriteRenderer spriteRenderer;
@@ -43,7 +47,9 @@ public class ToggleLever : MonoBehaviour
         for (int i = 0; i < ActivateObjectList.Count; i++)
         {
             if (ActivateObjectList[i].transform.position.y >= YLevelFloat[i] && !isTurned)
+            {
                 ActivateObjectList[i].transform.position -= moveDownSpeed * Time.deltaTime;
+            }
         }
     }
     void OnTriggerEnter2D(Collider2D col)
@@ -53,6 +59,8 @@ public class ToggleLever : MonoBehaviour
             Vector3 collisionScale = col.gameObject.transform.localScale;
             if(collisionScale.y >= .1f)
             {
+                Source.PlayOneShot(FlickLever);
+                Source.PlayOneShot(MoveObject);
                 if (!isTurned)
                 {
                     isTurned = true;
@@ -67,6 +75,8 @@ public class ToggleLever : MonoBehaviour
         }
         if (col.gameObject.CompareTag("Player1"))
         {
+            Source.PlayOneShot(FlickLever);
+            Source.PlayOneShot(MoveObject);
             if (!isTurned)
             {
                 isTurned = true;
