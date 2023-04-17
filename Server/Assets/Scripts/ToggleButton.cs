@@ -24,9 +24,10 @@ public class ToggleButton : MonoBehaviour
 
     void OnTriggerStay2D(Collider2D col)
     {
-        moveDown = false;
-        if(col.gameObject.CompareTag("Player1") || col.gameObject.CompareTag("Player2"))
+        
+        if(col.gameObject.CompareTag("Player1"))
         {
+            moveDown = false;
             for (int i = 0; i < ActivateObjectList.Count; i++)
             {
                 maxHeightWall = YLevelFloat[i] + characterHeight;
@@ -37,6 +38,26 @@ public class ToggleButton : MonoBehaviour
                 else
                 {
                     break;
+                }
+            }
+        }
+        if (col.gameObject.CompareTag("Player2"))
+        {
+            Vector3 collisionScale = col.gameObject.transform.localScale;
+            if (collisionScale.y >= .1f)
+            {
+                moveDown = false;
+                for (int i = 0; i < ActivateObjectList.Count; i++)
+                {
+                    maxHeightWall = YLevelFloat[i] + characterHeight;
+                    if (maxHeightWall >= ActivateObjectList[i].transform.position.y)
+                    {
+                        ActivateObjectList[i].transform.position += moveUpSpeed * Time.deltaTime;
+                    }
+                    else
+                    {
+                        break;
+                    }
                 }
             }
         }

@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class ToggleLever : MonoBehaviour
 {
-    [SerializeField] Sprite LeverOff;
-    [SerializeField] Sprite LeverOn;
-    private SpriteRenderer spriteRenderer;
+    [SerializeField] public Sprite LeverOff;
+    [SerializeField] public Sprite LeverOn;
+    public SpriteRenderer spriteRenderer;
     [Space]
     [SerializeField] List<GameObject> ActivateObjectList = new List<GameObject>();
     [SerializeField] List<float> YLevelFloat = new List<float>();
@@ -14,7 +14,7 @@ public class ToggleLever : MonoBehaviour
     [SerializeField] Vector3 moveDownSpeed;
     float maxHeightWall;
     [SerializeField] float characterHeight;
-    [SerializeField] bool isTurned = false;
+    [SerializeField] public bool isTurned = false;
     [SerializeField] ScriptableObject SGCharacter;
 
     private void Start()
