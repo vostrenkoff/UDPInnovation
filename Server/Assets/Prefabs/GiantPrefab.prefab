@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8530735741135007950}
   - component: {fileID: 9032590758300898916}
   - component: {fileID: 1241999642695256364}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -88,7 +88,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5948005277411595731}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -130,7 +130,7 @@ GameObject:
   - component: {fileID: 2922980583385244576}
   - component: {fileID: 1508699820008000179}
   - component: {fileID: 6811944059789125279}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: GiantPrefab
   m_TagString: Player1
   m_Icon: {fileID: 0}
@@ -218,8 +218,11 @@ MonoBehaviour:
   _speed: 300
   AnimController: {fileID: 6811944059789125279}
   jumpStrength: 420
+  startYes: {fileID: 0}
   nicknameOnTop: 
   characterType: 0
+  bigSize: {x: 0.22, y: 0.22, z: 0.22}
+  smallSize: {x: 0.09, y: 0.09, z: 0.09}
 --- !u!50 &7032526492482162045
 Rigidbody2D:
   serializedVersion: 4
@@ -298,7 +301,7 @@ Animator:
   m_GameObject: {fileID: 5471011928180129447}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 626ee70fcc99b00469fadb1acef55bde, type: 2}
+  m_Controller: {fileID: 9100000, guid: d6f0fb7df62f84ffa832c35937893ee6, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

@@ -32,12 +32,15 @@ public class PlayerMovement : MonoBehaviour
     }
     public void Jump()
     {
-        if(isGrounded())
+        if (isGrounded())
+        {
             rb.velocity = new Vector2(rb.velocity.x, jumpStrength);
+           
+        }
     }
     private bool isGrounded()
     {
 
-        return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
+        return Physics2D.OverlapCircle(groundCheck.position, 0.3f, groundLayer);
     }
 }

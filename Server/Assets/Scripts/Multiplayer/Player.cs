@@ -17,8 +17,10 @@ public class Player : MonoBehaviour
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private float _speed = 8f;
+    [SerializeField] private Animator AnimController;
     private float horizontal;
     public float jumpStrength = 160f;
+    public GameObject startYes;
     public  string nicknameOnTop;
     public static Dictionary<ushort, Player> list= new Dictionary<ushort, Player>();
     public ushort Id { get; private set; }
@@ -26,9 +28,12 @@ public class Player : MonoBehaviour
     private static Camera _camera;
     [SerializeField] public Character characterType;
 
+    static UIController UIcontroller;
+
     private IEnumerator coroutine;
     private bool jumpBlock = false;
-
+    private bool shrinked;
+    private bool startedLevel1 = false;
     [Space]
 
     [SerializeField] Vector3 bigSize = new Vector3(0.22f, 0.22f, 0.22f);
@@ -43,10 +48,28 @@ public class Player : MonoBehaviour
     
     private void Move(float command, ushort id)
     {
-        Debug.Log("command "+ command);
+        Debug.Log(rb.velocity.y);
+        if(rb.velocity.y > 1f)
+        {
+            AnimController.SetBool("isJumping", true);
+        }
+        else if(rb.velocity.y <-10)
+        {
+            AnimController.SetBool("isJumping", false);
+            AnimController.SetBool("isFalling", true);
+        }
+        else if (rb.velocity.y <1 && rb.velocity.y>=0)
+        {
+            AnimController.SetBool("isJumping", false);
+            AnimController.SetBool("isFalling", false);
+        }
         if (list.TryGetValue(id, out Player player))
         {
-            if(command == 1)
+            if (command == 0)
+            {
+                AnimController.SetBool("isWalking", false);
+            }
+            if (command == 1)
             {
                 /*Vector3 addedValue = new Vector3(-10, 0, 0);
                 //player.transform.position += addedValue;
@@ -54,6 +77,7 @@ public class Player : MonoBehaviour
                 transform.position += new Vector3(moveAmount * _speed, 0f, 0f);*/
                 rb.velocity = new Vector2(-_speed, rb.velocity.y);
                 transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+                AnimController.SetBool("isWalking", true);
             }
             if (command == 2)
             {
@@ -63,9 +87,11 @@ public class Player : MonoBehaviour
                 transform.position += new Vector3(moveAmount * _speed, 0f, 0f);*/
                 transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
                 rb.velocity = new Vector2(_speed, rb.velocity.y);
+                AnimController.SetBool("isWalking", true);
             }
             if (command == 3 && !jumpBlock)
             {
+                //AnimController.SetTrigger("jump");
                 Debug.Log("got message 3 ");
                     jumpBlock= true;
                     _playerMovement.Jump();
@@ -76,21 +102,29 @@ public class Player : MonoBehaviour
                 if(characterType == Character.Giant)
                 {
                     Debug.Log("Giant pushes.");
+                    AnimController.SetBool("isAbility", true);
 
                 }
                 if(characterType == Character.Shrink)
                 {
                     Debug.Log("Shrinker shrinks.");
-                    if (!bigSizeActive)
+                    if (!shrinked)
                     {
-                        transform.localScale = bigSize;
-                        bigSizeActive = true;
+                        transform.localScale = new Vector3(1.5f, 1.5f, 1f);
+                        shrinked = true;
                     }
                     else
                     {
-                        transform.localScale = smallSize;
-                        bigSizeActive = false;
+                        transform.localScale = new Vector3(1f, 1f, 1);
+                        shrinked = false;
                     }
+                }
+            }
+            if (command == 6)
+            {
+                if (characterType == Character.Giant)
+                {
+                    AnimController.SetBool("isAbility", false);
                 }
             }
 
@@ -109,25 +143,48 @@ public class Player : MonoBehaviour
     }
     public static void Spawn(ushort id, string username)
     {
+
+        UIcontroller = FindObjectOfType<UIController>();
         Scene currentScene = SceneManager.GetActiveScene();
         Vector3 spawnPos = new Vector3(0, 0, 0);
 
-        GameObject TextObject1 = GameObject.Find("P1GameObject");
-        GameObject TextObject2 = GameObject.Find("P2GameObject");
-        Text myText1 = TextObject1.GetComponent<Text>();
-        Text myText2 = TextObject2.GetComponent<Text>();
+        string sceneName = currentScene.name;
+        GameObject TextObject1;
+        GameObject TextObject2;
+        Text myText1;
+        Text myText2;
 
-        if (currentScene.name == "Main") { spawnPos = new Vector3(0, 0, 0); }
+
+
+
+        if (sceneName == "Main")
+        {
+            TextObject1 = GameObject.Find("P1GameObject");
+            TextObject2 = GameObject.Find("P2GameObject");
+            myText1 = TextObject1.GetComponent<Text>();
+            myText2 = TextObject2.GetComponent<Text>();
+        }
+
+        if (currentScene.name == "Main") { spawnPos = new Vector3(11000, 0, 0); }
         else if (currentScene.name == "LevelOne") { spawnPos = new Vector3(-661, -150, 0); }
         else if (currentScene.name == "LevelTwo") { spawnPos = new Vector3(0, 0, 0); }
         else if (currentScene.name == "LevelThree") { spawnPos = new Vector3(0, 0, 0); }
         else if (currentScene.name == "LevelFour") { spawnPos = new Vector3(0, 0, 0); }
+
         if (list.Count == 1)
         {
             
-            
-            myText1.text = username + " connected";
-
+            if (sceneName == "Main")
+            {
+                if (UIcontroller != null)
+                {
+                    UIcontroller.StartPlayScreen();
+                    UIcontroller.BlueConnected();
+                }
+                TextObject1 = GameObject.Find("P1GameObject");
+                myText1 = TextObject1.GetComponent<Text>();
+                myText1.text = username;
+            }
             Player player = Instantiate(GameLogic.Singleton.Player1Prefab, new Vector3(202, 404, 0f), Quaternion.identity).GetComponent<Player>();
             GameObject canvas = GameObject.Find("Canvas");
             player.transform.SetParent(canvas.transform);
@@ -141,9 +198,20 @@ public class Player : MonoBehaviour
         }
         if (list.Count == 0)
         {
-            
-            
-            myText2.text = username + " connected";
+            Debug.Log("si senor 0");
+            if (sceneName == "Main")
+            {
+                Debug.Log("si senor Main");
+                if (UIcontroller != null)
+                {
+                    
+                    UIcontroller.StartPlayScreen();
+                    UIcontroller.RedConnected();
+                }
+                TextObject2 = GameObject.Find("P2GameObject");
+                myText2 = TextObject2.GetComponent<Text>();
+                myText2.text = username;
+            }
 
             Player player = Instantiate(GameLogic.Singleton.Player2Prefab, new Vector3(303f, 404f, 0f), Quaternion.identity).GetComponent<Player>();
             GameObject canvas = GameObject.Find("Canvas");
@@ -161,6 +229,7 @@ public class Player : MonoBehaviour
     private void Start()
     {
         coroutine = Wait();
+
     }
     private void Update()
     {
@@ -168,10 +237,14 @@ public class Player : MonoBehaviour
 
         nicknameText.GetComponent<Text>().text = nicknameOnTop;
         
+        if(list.Count == 2 && !startedLevel1)
+        {
+            UIcontroller.ReadyToStart();
+            startedLevel1 = true;
+        }
     }
     private bool isGrounded()
     {
-        
         return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
     }
     private void OnDestroy()
@@ -202,7 +275,7 @@ public class Player : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(5f);
+            yield return new WaitForSeconds(1f);
             jumpBlock = false;
         }
     }

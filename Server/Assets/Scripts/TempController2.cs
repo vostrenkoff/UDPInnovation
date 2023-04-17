@@ -51,11 +51,11 @@ public class TempController2 : MonoBehaviour
 
         if (bigSizeActive)
         {
-            transform.localScale = bigSize;
+            //transform.localScale = bigSize;
         }
         else if (!bigSizeActive)
         {
-            transform.localScale = smallSize;
+            //transform.localScale = smallSize;
         }
 
         // Movement controls
