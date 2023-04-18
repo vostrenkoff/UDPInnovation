@@ -33,6 +33,9 @@ public class Player : MonoBehaviour
     private IEnumerator coroutine;
     private bool jumpBlock = false;
     private bool shrinked;
+
+    public static bool isGiantPushing = false;
+
     private bool startedLevel1 = false;
     [Space]
     [SerializeField] Vector3 bigSize = new Vector3(0.1f, 0.1f, 0.1f);
@@ -101,6 +104,7 @@ public class Player : MonoBehaviour
                 {
                     Debug.Log("Giant pushes.");
                     AnimController.SetBool("isAbility", true);
+                    isGiantPushing= true;
 
                 }
                 if(characterType == Character.Shrink)
@@ -123,6 +127,7 @@ public class Player : MonoBehaviour
                 if (characterType == Character.Giant)
                 {
                     AnimController.SetBool("isAbility", false);
+                    isGiantPushing= false;
                 }
             }
             if(command == 7)
@@ -317,7 +322,7 @@ public class Player : MonoBehaviour
             }
         }
     }
-
+    
     private IEnumerator Wait()
     {
         while (true)
