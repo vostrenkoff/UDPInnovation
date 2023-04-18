@@ -218,12 +218,12 @@ MonoBehaviour:
     m_Bits: 8
   _speed: 300
   AnimController: {fileID: 6811944059789125279}
-  jumpStrength: 420
+  jumpStrength: 260
   startYes: {fileID: 0}
   nicknameOnTop: 
   characterType: 0
-  bigSize: {x: 0.22, y: 0.22, z: 0.22}
-  smallSize: {x: 0.09, y: 0.09, z: 0.09}
+  bigSize: {x: 10, y: 10, z: 10}
+  smallSize: {x: 7, y: 7, z: 7}
 --- !u!50 &7032526492482162045
 Rigidbody2D:
   serializedVersion: 4
@@ -286,7 +286,7 @@ MonoBehaviour:
   player: {fileID: 7564217825075286939}
   controller: {fileID: 0}
   rb: {fileID: 7032526492482162045}
-  jumpStrength: 420
+  jumpStrength: 260
   groundCheck: {fileID: 5948005277411595731}
   groundLayer:
     serializedVersion: 2

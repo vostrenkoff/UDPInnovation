@@ -35,10 +35,8 @@ public class Player : MonoBehaviour
     private bool shrinked;
     private bool startedLevel1 = false;
     [Space]
-
-    [SerializeField] Vector3 bigSize = new Vector3(0.22f, 0.22f, 0.22f);
-    [SerializeField] Vector3 smallSize = new Vector3(0.09f, 0.09f, 0.09f);
-    bool bigSizeActive = false;
+    [SerializeField] Vector3 bigSize = new Vector3(0.1f, 0.1f, 0.1f);
+    [SerializeField] Vector3 smallSize = new Vector3(0.04f, 0.04f, 0.04f);
 
     public enum Character
     {
@@ -110,12 +108,12 @@ public class Player : MonoBehaviour
                     Debug.Log("Shrinker shrinks.");
                     if (!shrinked)
                     {
-                        transform.localScale = new Vector3(1.5f, 1.5f, 1f);
+                        transform.localScale = bigSize;
                         shrinked = true;
                     }
                     else
                     {
-                        transform.localScale = new Vector3(1f, 1f, 1);
+                        transform.localScale = smallSize;
                         shrinked = false;
                     }
                 }
