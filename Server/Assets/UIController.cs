@@ -17,6 +17,7 @@ public class UIController : MonoBehaviour
     public GameObject LevelTwo;
     public GameObject LevelThree;
     public GameObject LevelFour;
+    public GameObject LevelFive;
 
     private IEnumerator coroutine;
     public CanvasGroup canvasDaDa;
@@ -164,6 +165,27 @@ public class UIController : MonoBehaviour
         {
 
             player.transform.localPosition = new Vector3(-805 + startpos, 320f, 0f);
+            startpos += 100;
+        }
+        FadeIn();
+    }
+    public void GoToLevel5()
+    {
+        FadeOut();
+        StartCoroutine(Waiter(1, lvl5));
+    }
+    void lvl5()
+    {
+        LevelFour.SetActive(false);
+        LevelFive.SetActive(true);
+
+        Player[] players = FindObjectsOfType<Player>();
+
+        float startpos = 0;
+        foreach (Player player in players)
+        {
+
+            player.transform.localPosition = new Vector3(-415 + startpos, 262f, 0f);
             startpos += 100;
         }
         FadeIn();

@@ -17,7 +17,7 @@ public class IntroScript : MonoBehaviour
         }
         if(i >= 5)
         {
-            SceneManager.LoadScene("LevelOne");
+            SceneManager.LoadScene("Main");
         }
     }
 }

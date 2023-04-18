@@ -55,6 +55,7 @@ public class NextLevelTriggerScript : MonoBehaviour
             }
             if (GoToLevel == Levels.LevelThree) { UIcontroller.GoToLevel3(); }
             if (GoToLevel == Levels.LevelFour) { UIcontroller.GoToLevel4(); }
+            if (GoToLevel == Levels.LevelFive) { UIcontroller.GoToLevel5(); }
         }
     }
 }
