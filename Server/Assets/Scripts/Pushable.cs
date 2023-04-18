@@ -23,7 +23,7 @@ public class Pushable : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player1"))
         {
-            rb.constraints = RigidbodyConstraints2D.FreezeAll;
+            rb.constraints = RigidbodyConstraints2D.FreezePositionX;
         }
     }
 }
